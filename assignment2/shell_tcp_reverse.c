@@ -1,19 +1,16 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
 int main()
 {
-	// Create sockaddr struct
+	// Create addr struct
 	struct sockaddr_in addr;
-	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(4444);
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	addr.sin_port = htons(4444);	// Port
+	addr.sin_addr.s_addr = inet_addr("127.0.0.1");	// Connection IP
 
 	// Create socket
 	int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);

@@ -28,7 +28,7 @@ shellcode = shellcode.replace('\\x11\\x5c', '\\x{}\\x{}'.format(byte1, byte2))
 print('Here\'s the shellcode using port {port}:'.format(port = port))
 print(shellcode)
 
-if '\\x0\\' in shellcode:
+if '\\x0\\' in shellcode or '\\x00\\' in shellcode:
 	print('##################################')
 	print('Warning: Null byte in shellcode!')
 	print('##################################')
