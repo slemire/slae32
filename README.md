@@ -1,2 +1,1 @@
-# slae32
-SLAE 32 bits course
+# SLAE 32 bits course
