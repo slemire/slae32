@@ -10,18 +10,24 @@ int main()
 	int r;
 
 	while (1) {
+		// Try to read 8 bytes ahead of current memory pointer
 		r = access(addr+8, 0);
+		// If we don't get an EFAULT, we'll start checking for the egg
 		if (errno != 14) {
+			// Need to check egg twice, so we don't end up matching the egg from our own code
 			if (strncmp(addr, egg, 4) == 0 && strncmp(addr+4, egg, 4) == 0) {
 				char tmp[32];
 				memset(tmp, 0, 32);
 				strncpy(tmp, addr, 8);
 				printf("Egg found at: %ul %s, jumping to shellcode (8 bytes ahead of egg address)...\n", addr, tmp);
+				// Jump to shellcode
 				int (*ret)() = (int(*)())addr+8;
 				ret();
 			}
+			// Egg not found, keep going one byte at a time
 			addr++;
         } else {
+			// EFAULT on access, skip to next memory page
 			addr = addr + 4095;
 		}
 	}
