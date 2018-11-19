@@ -26,13 +26,17 @@ if padding:
 
 shellcode_encoded = bytearray()
 
+# Swap out 1st and 2nd byte, then 3rd and 4th byte
 for i in range(0, len(shellcode_original), 4):
 	shellcode_encoded.append(shellcode_original[i+1])
 	shellcode_encoded.append(shellcode_original[i])
 	shellcode_encoded.append(shellcode_original[i+3])
 	shellcode_encoded.append(shellcode_original[i+2])
 
+# Print out the output
 shellcode_original_hex = ''.join('\\x{:02x}'.format(x) for x in shellcode_original)
 shellcode_encoded_hex = ''.join('\\x{:02x}'.format(x) for x in shellcode_encoded)
+shellcode_encoded_nasm = ''.join('0x{:02x},'.format(x) for x in shellcode_encoded).rstrip(',')
 print('[+] Original shellcode (len: {}): {}'.format(len(shellcode_original), shellcode_original_hex))
 print('[+] Encoded shellcode (len: {}): {}'.format(len(shellcode_encoded), shellcode_encoded_hex))
+print('[+] Encoded shell in NASM format: {}'.format(shellcode_encoded_nasm))
