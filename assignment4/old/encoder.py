@@ -1,12 +1,8 @@
 #!/usr/bin/python
 
-import random
 import socket
 import struct
 import sys
-
-# Seed PRNG (don't use this for real crypto)
-random.seed()
 
 if len(sys.argv) < 2:
 	print('Usage: {name} [shellcode_file]'.format(name = sys.argv[0]))
@@ -30,28 +26,12 @@ if padding:
 
 shellcode_encoded = bytearray()
 
-# Process 4 bytes at a time
+# Swap out 1st and 2nd byte, then 3rd and 4th byte
 for i in range(0, len(shellcode_original), 4):
-	xor_byte_good = False
-	while(xor_byte_good == False):
-		# Generate random XOR byte
-		r = random.randint(1,255)
-		# Check that resulting shellcode doesn't contain null bytes
-		if (r ^ shellcode_original[i] != 0) and (r ^ shellcode_original[i+1] != 0) and (r ^ shellcode_original[i+2] != 0) and (r ^ shellcode_original[i+3] != 0):
-			xor_byte_good = True
-
-	# Encoded shellcode contains XOR byte + next 4 bytes reversed	
-	shellcode_encoded.append(r)
-	shellcode_encoded.append(shellcode_original[i+3] ^ r)
-	shellcode_encoded.append(shellcode_original[i+2] ^ r)
-	shellcode_encoded.append(shellcode_original[i+1] ^ r)
-	shellcode_encoded.append(shellcode_original[i] ^ r)
-
-# Add end of shellcode marker
-shellcode_encoded.append(0x90)
-shellcode_encoded.append(0x90)
-shellcode_encoded.append(0xaa)
-shellcode_encoded.append(0xaa)
+	shellcode_encoded.append(shellcode_original[i+1])
+	shellcode_encoded.append(shellcode_original[i])
+	shellcode_encoded.append(shellcode_original[i+3])
+	shellcode_encoded.append(shellcode_original[i+2])
 
 # Print out the output
 shellcode_original_hex = ''.join('\\x{:02x}'.format(x) for x in shellcode_original)
