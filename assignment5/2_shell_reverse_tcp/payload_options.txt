@@ -1,0 +1,57 @@
+
+       Name: Linux Command Shell, Reverse TCP Stager
+     Module: payload/linux/x86/shell/reverse_tcp
+   Platform: Linux
+       Arch: x86
+Needs Admin: No
+ Total size: 245
+       Rank: Normal
+
+Provided by:
+    skape <mmiller@hick.org>
+    egypt <egypt@metasploit.com>
+    tkmru
+
+Basic options:
+Name   Current Setting  Required  Description
+----   ---------------  --------  -----------
+LHOST                   yes       The listen address (an interface may be specified)
+LPORT  4444             yes       The listen port
+
+Description:
+  Spawn a command shell (staged). Connect back to the attacker
+
+
+    Name                        Current Setting  Required  Description
+    ----                        ---------------  --------  -----------
+    AppendExit                  false            no        Append a stub that executes the exit(0) system call
+    AutoRunScript                                no        A script to run automatically on session creation.
+    CommandShellCleanupCommand                   no        A command to run before the session is closed
+    EnableStageEncoding         false            no        Encode the second stage payload
+    InitialAutoRunScript                         no        An initial script to run on session creation (before AutoRunScript)
+    PayloadUUIDName                              no        A human-friendly name to reference this unique payload (requires tracking)
+    PayloadUUIDRaw                               no        A hex string representing the raw 8-byte PUID value for the UUID
+    PayloadUUIDSeed                              no        A string to use when generating the payload UUID (deterministic)
+    PayloadUUIDTracking         false            yes       Whether or not to automatically register generated UUIDs
+    PrependChrootBreak          false            no        Prepend a stub that will break out of a chroot (includes setreuid to root)
+    PrependFork                 false            no        Prepend a stub that executes: if (fork()) { exit(0); }
+    PrependSetgid               false            no        Prepend a stub that executes the setgid(0) system call
+    PrependSetregid             false            no        Prepend a stub that executes the setregid(0, 0) system call
+    PrependSetresgid            false            no        Prepend a stub that executes the setresgid(0, 0, 0) system call
+    PrependSetresuid            false            no        Prepend a stub that executes the setresuid(0, 0, 0) system call
+    PrependSetreuid             false            no        Prepend a stub that executes the setreuid(0, 0) system call
+    PrependSetuid               false            no        Prepend a stub that executes the setuid(0) system call
+    ReverseAllowProxy           false            yes       Allow reverse tcp even with Proxies specified. Connect back will NOT go through proxy but directly to LHOST
+    ReverseListenerBindAddress                   no        The specific IP address to bind to on the local system
+    ReverseListenerBindPort                      no        The port to bind to on the local system if different from LPORT
+    ReverseListenerComm                          no        The specific communication channel to use for this listener
+    ReverseListenerThreaded     false            yes       Handle every connection in a new thread (experimental)
+    StageEncoder                                 no        Encoder to use if EnableStageEncoding is set
+    StageEncoderSaveRegisters                    no        Additional registers to preserve in the staged payload if EnableStageEncoding is set
+    StageEncodingFallback       true             no        Fallback to no encoding if the selected StageEncoder is not compatible
+    StagerRetryCount            10               no        The number of times the stager should retry if the first connect fails
+    StagerRetryWait             5                no        Number of seconds to wait for the stager between reconnect attempts
+    VERBOSE                     false            no        Enable detailed status messages
+    WORKSPACE                                    no        Specify the workspace for this module
+    Name  Current Setting  Required  Description
+    ----  ---------------  --------  -----------
